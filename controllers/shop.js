@@ -88,12 +88,27 @@ exports.deleteCartItem = (req, res, next) => {
     .catch(err => console.log(err));
 }
 
-// exports.getOrders = (req, res, next) => {
-//   res.render('shop/orders', {
-//     path: '/orders',
-//     pageTitle: 'Your Orders'
-//   });
-// };
+exports.createOrder = (req, res) => {
+
+  req.user.addOrder()
+    .then(() => {
+      res.redirect('/cart');
+    })
+    .catch(err => console.log(err));
+
+}
+
+exports.getOrders = (req, res, next) => {
+  req.user.getOrder()
+    .then((orders) => {
+      res.render('shop/orders', {
+        path: '/orders',
+        pageTitle: 'Your Orders',
+        orders: orders
+      });
+    })
+
+};
 
 // exports.getCheckout = (req, res, next) => {
 
